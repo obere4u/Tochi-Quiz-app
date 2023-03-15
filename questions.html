@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" />
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="This is a Quiz app that contains questions and answers with some features such as timing, quiz level" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="keywords" content=" HTML, CSS, JavaScript, Quiz, quiz, app" />
+    <meta name="author" content="Tochukwu Nwosa" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <title>Quiz App</title>
+</head>
+<body>
+    <div class="quiz-container" ariel-role="header">
+        
+        <div class="level">
+            <select name="quizType" id="quizType" aria-label="label for the select">
+                <option value="javascript">JavaScript</option>
+                <option value="html">HTML</option>
+                <option value="css">CSS</option>
+            </select>
+            <select name="quizLevel" id="quizLevel"aria-label="label for the select">
+                <option value="javascript">JavaScript</option>
+                <option value="html">HTML</option>
+                <option value="css">CSS</option>
+            </select>
+            <select name="quizDifficulty" id="quizDifficulty" aria-label="label for the select">
+                <option value="hard">Easy</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="hard">Hard</option>
+            </select>
+        </div>
+        <div class="question-cotainer">
+           
+        </div>
+        <form action="/questions.html">
+            <button type="submit">Next</button>
+            <button type="submit">Prev</button>
+        </form>
+        
+    </div>
+    
+
+    <script src="main.js"></script>
+</body>
+</html>

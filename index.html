@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" />
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="This is a Quiz app that contains questions and answers with some features such as timing, quiz level" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="keywords" content=" HTML, CSS, JavaScript, Quiz, quiz, app" />
+    <meta name="author" content="Tochukwu Nwosa" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <title>Quiz App</title>
+</head>
+<body>
+    <div class="quiz-container" ariel-role="header">
+        
+        <div class="quiz">
+            <select name="quizType" id="quizType" aria-label="label for the select">
+                <option value="javascript">JavaScript</option>
+                <option value="html">HTML</option>
+                <option value="css">CSS</option>
+            </select>
+            <select name="quizLevel" id="quizLevel"aria-label="label for the select">
+                <option value="javascript">JavaScript</option>
+                <option value="html">HTML</option>
+                <option value="css">CSS</option>
+            </select>
+            <select name="quizDifficulty" id="quizDifficulty" aria-label="label for the select">
+                <option value="hard">Easy</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="hard">Hard</option>
+            </select>
+        </div>
+        <div class="rules">
+            <h2>Some Rules of this quiz</h2>
+            <ol>
+                <li>
+                    <p>You have only 15 seconds per question</p>
+                </li>
+                <li>
+                    <p>Once you select a question, it can't be undone</p>
+                </li>
+                <li>
+                    <p>You cannot select an answer once the time is up</p>
+                </li>
+                <li>
+                    <p>Each correct answer gets 10 points</p>
+                </li>
+            </ol>
+        </div>
+        <div class="question-container">   
+            <div class="quiz-questions">
+                <div class="question-number">Question 1/10
+                </div>
+                <div class="question-wrapper">
+                    <!--******Will use JavaScript to add the questions******-->
+                    <div class="question"></div>
+                    <div class="answer-option optionA">
+                        <span>A</span>
+                    </div>
+                    <div class="answer-option optionB">
+                        <span>B</span>
+                    </div>
+                    <div class="answer-option optionC">
+                        <span>c</span>
+                    </div>
+                    <div class="answer-option optionD">
+                        <span>D</span>
+                    </div>
+                </div>
+                <div class="timer"> Time left:
+                    <span>15</span>
+                </div>
+                <div class="next">
+                    <button type="submit">Next</button>
+                </div>
+            </div>
+            <div class="answer">
+                <div class="correct">
+                    <span></span>
+                </div>
+                <div class="incorrect">
+                    <span></span>
+                </div>
+            </div>
+        </div>
+        <div class="start-quiz">
+            <button type="submit">Start Quiz</button>
+        </div>
+        
+    </div>
+    
+
+    <script src="main.js"></script>
+</body>
+</html>
