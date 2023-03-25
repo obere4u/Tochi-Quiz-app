@@ -17,7 +17,7 @@
 <body>
     <div class="quiz-container" ariel-role="header">
         
-        <div class="quiz">
+        <div class="quiz show">
             <select name="quizType" id="quizType" aria-label="label for the select">
                 <option value="javascript">JavaScript</option>
                 <option value="html">HTML</option>
@@ -34,7 +34,7 @@
                 <option value="hard">Hard</option>
             </select>
         </div>
-        <div class="rules">
+        <div class="rules show">
             <h2>Some Rules of this quiz</h2>
             <ol>
                 <li>
@@ -51,7 +51,14 @@
                 </li>
             </ol>
         </div>
-        <div class="question-container">   
+        <div class="start-quiz show">
+            <button type="submit" id="quiz-start-btn">Start Quiz</button>
+        </div>
+        <div class="question-container hide"> 
+            <div class="timer"> 
+                <div class="timer-quote">Time left:</div>
+                <div class="timer-time">15</div>
+            </div>  
             <div class="quiz-questions">
                 <div class="question-number">Question 1/10
                 </div>
@@ -77,27 +84,20 @@
                         Femi
                     </div>
                 </div>
-                <div class="timer"> 
-                    <div class="timer-quote">Time left:</div>
-                    <div class="timer-time">15</div>
-                </div>
+                
                 <div class="next">
-                    <button type="submit">Next</button>
+                    <button type="submit" class="next">Next</button>
                 </div>
             </div>
-            <div class="answer">
-                <div class="correct">
+            <div class="answers">
+                <div class="correct hide">
                     <span></span>
                 </div>
-                <div class="incorrect">
+                <div class="incorrect hide">
                     <span></span>
                 </div>
             </div>
         </div>
-        <div class="start-quiz">
-            <button type="submit">Start Quiz</button>
-        </div>
-        
     </div>
     
 

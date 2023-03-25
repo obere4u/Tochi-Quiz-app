@@ -1,36 +1,28 @@
-// const quiz = [
-//     ["What is Superman's real name? ","Clark Kent"],
-//     ["What is Wonder Woman's real name?","Diana Prince"],
-//     ["What is Batman's real name?","Bruce Wayne"]
-// ];
+//***This is the JavaScript code of the quiz game app, I will start by getting the HTML elements (DOM)******/
 
-// function start(quiz){
-//     let score = 0;
-//     //***main game loop*/
-//     for(const [question, answer] of quiz){
-//         const response = ask(question);
-//         check(response, answer);
-//     }
-//     //***end of game loop */
+const quizContainer = document.querySelector('body');
+const quizRule = document.querySelector('.show');
+const startBtn = document.querySelector('#quiz-start-btn');
+const questionContainer = document.querySelector('.question-container');
+const questionNumber = document.querySelector('.question-number');
+const questionWrapper = document.querySelector('.question-wrapper');
+const timer = document.querySelector('.timer-time');
+const nextQuestion = document.querySelector('.next');
+const correctAns = document.querySelector('.correct');
+const incorrectAns = document.querySelector('.incorrect');
 
-//     gameOver();
-//     // function declaration
-//     function ask(question){
-//         return prompt(question);
-//     }
+// window.onload = () => {
+// //   quizContainer.classList.remove("hide");
+//   quizContainer.classList.add('question-container');
+// };
 
-//     function check(response, answer) {
-//         if(response === answer) {
-//         alert("You are correct");
-//         score++;
-//         } else {
-//         alert(`Wrong! The answer is ${answer}`);
-//         }
-//     }
+startBtn.addEventListener("click", () => {
+    // quizContainer.classList.remove("hide");
+    if (questionContainer.style.display === "none") {
+        questionContainer.style.display = "block";
+    }
+  console.log(2);
+});
 
-//     function gameOver(){
-//         alert(`Game Over, you scored: ${score} point: ${score !== 1 ? 's' : " "}`)
-//     }
-// }
-// start(quiz);
 
+// console.log(incorrectAns)
