@@ -16,31 +16,52 @@
 </head>
 <body>
     <div class="quiz-container" ariel-role="header">
-        
-        <div class="level">
-            <select name="quizType" id="quizType" aria-label="label for the select">
-                <option value="javascript">JavaScript</option>
-                <option value="html">HTML</option>
-                <option value="css">CSS</option>
-            </select>
-            <select name="quizLevel" id="quizLevel"aria-label="label for the select">
-                <option value="javascript">JavaScript</option>
-                <option value="html">HTML</option>
-                <option value="css">CSS</option>
-            </select>
-            <select name="quizDifficulty" id="quizDifficulty" aria-label="label for the select">
-                <option value="hard">Easy</option>
-                <option value="Intermediate">Intermediate</option>
-                <option value="hard">Hard</option>
-            </select>
+        <div class="question-container"> 
+            <div class="timer"> 
+                <p>Time left:</p>
+                <span class="time">15s</span>
+                </div>  
+            <div class="question-number-wrapper">
+                <p>Question:</p>
+                <p class="question-number">
+                    <span></span>/10</p>
+            </div>
+            <div class="quiz-questions">
+                
+                <div class="question-wrapper">
+                    <!--******Will use JavaScript to add the questions******-->
+                    <p class="question"></p>
+                    <button class="answer-option">
+                        <span>A</span>
+                        <div class="optionA"></div>
+                    </button>
+                    <button class="answer-option ">
+                        <span>B</span>
+                        <div class="optionB"></div>
+                    </button>
+                    <button class="answer-option ">
+                        <span>C</span>
+                        <div class="optionC"></div>
+                    </b>
+                    <button class="answer-option ">
+                        <span>D</span>
+                        <div class="optionD"></div>
+                    </button>
+                </div>
+            </div>
+            <div class="next">
+                <button id="next" type="submit">Next</button>
+            </div>
+            
+            <div class="answer">
+                <div class="correct">
+                    <span></span>
+                </div>
+                <div class="incorrect">
+                    <span></span>
+                </div>
+            </div>
         </div>
-        <div class="question-cotainer">
-           
-        </div>
-        <form action="/questions.html">
-            <button type="submit">Next</button>
-            <button type="submit">Prev</button>
-        </form>
         
     </div>
     

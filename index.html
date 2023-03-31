@@ -17,7 +17,7 @@
 <body>
     <div class="quiz-container" ariel-role="header">
         
-        <div class="quiz show">
+        <div class="quiz">
             <select name="quizType" id="quizType" aria-label="label for the select">
                 <option value="javascript">JavaScript</option>
                 <option value="html">HTML</option>
@@ -34,7 +34,7 @@
                 <option value="hard">Hard</option>
             </select>
         </div>
-        <div class="rules show">
+        <div class="rules">
             <h2>Some Rules of this quiz</h2>
             <ol>
                 <li>
@@ -46,61 +46,16 @@
                 <li>
                     <p>You cannot select an answer once the time is up</p>
                 </li>
-                <li>
+                 <li>
                     <p>Each correct answer gets 10 points</p>
                 </li>
             </ol>
         </div>
-        <div class="start-quiz show">
-            <button type="submit" id="quiz-start-btn">Start Quiz</button>
-        </div>
-        <div class="question-container hide"> 
-            <div class="timer"> 
-                <div class="timer-quote">Time left:</div>
-                <div class="timer-time">15</div>
-            </div>  
-            <div class="quiz-questions">
-                <div class="question-number">Question 1/10
-                </div>
-                <div class="question-wrapper">
-                    <!--******Will use JavaScript to add the questions******-->
-                    <div class="question">
-                        <p>who is the president of Nigeria?</p>
-                    </div>
-                    <div class="answer-option optionA">
-                        <span>A</span>
-                        Ebele
-                    </div>
-                    <div class="answer-option optionB">
-                        <span>B</span>
-                        Buhari
-                    </div>
-                    <div class="answer-option optionC">
-                        <span>c</span>
-                        Atiku
-                    </div>
-                    <div class="answer-option optionD">
-                        <span>D</span>
-                        Femi
-                    </div>
-                </div>
-                
-                <div class="next">
-                    <button type="submit" class="next">Next</button>
-                </div>
-            </div>
-            <div class="answers">
-                <div class="correct hide">
-                    <span></span>
-                </div>
-                <div class="incorrect hide">
-                    <span></span>
-                </div>
-            </div>
+        <div class="start-quiz">
+            <button id="start" type="submit">Start Quiz</button>
         </div>
     </div>
     
-
     <script src="main.js"></script>
 </body>
 </html>
