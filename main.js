@@ -243,11 +243,10 @@ const lineValueElement = document.querySelector(".line-value");
 // const submitBtn = document.querySelector("submit-btn");
 // const resultEl = document.querySelector("result");
 let timerCountDown;
-let questionNumber = 0;
+let questionNumber = 1;
 let currentQuestion = {};
 let score = 0;
 let selectedAnswer;
-// let questionNumber = document.querySelector('.question-number');
 
 let shuffledQuestion = []; //the question will be shuffled but for now, it is an empty array
 let playerScore = 0; //holds the player score
@@ -255,6 +254,7 @@ let wrongAttempt = 0; //amount of wrong answers picked by player
 let indexNumber = 0; //will be used in displaying next question
 let correctAnswer = 0;
 let wrongAnswer = 0;
+let numberOfQuestionAnswered = 0;
 
 //Create HTML elements
 const messageContainer = document.createElement("div");
@@ -274,7 +274,7 @@ function handleQuestions() {
   return shuffledQuestion;
 }
 
-shuffledQuestion = handleQuestions();
+// shuffledQuestion = handleQuestions();
 
 
 //Event Listeners
@@ -297,12 +297,9 @@ function startQuiz(e) {
 
 //
 window.onload =  () => {
-  setTimeout(() => {
-    nextQuestion();
-  }, 1500);
   displayTimer();
   handleQuestions();
-  leadingZero();
+  nextQuestion();
   /* 
   The window.onload event is triggered when the entire web page (including all images, scripts, and other resources) has finished loading
   
@@ -322,17 +319,23 @@ const updateProgressBar = () => {
 
   const minWidth = 0;
   const percentProgress = 1 - timerCount / timerDuration;
+  // let lineValue = (maxWidth - minWidth) * percentProgress;
   let lineValue = (maxWidth - minWidth) * percentProgress;
-  
-  if (timerCount === 0) {
-    // added conditional statement
-    lineValue = maxWidth;
-  }
+  const redWidth = (maxWidth - minWidth) * 0.05; // calculate width of red part
+  const greenWidth = (maxWidth - minWidth) * 0.95; // calculate width of green part
 
+  if (timerCount <= 5) {
+    // set the width of the red part
+    progressBar.style.backgroundImage = `linear-gradient(to right, green ${redWidth}px, red ${greenWidth}px)`;
+  } else {
+    // set the width of the green part only
+    progressBar.style.backgroundImage = `linear-gradient(to right, green ${lineValue}px, white 0)`;
+  }
   progressBar.style.width = `${lineValue}px`;
 
 };
 
+//adds zero 0 before the time once it is a single unit
 function leadingZero(time) {
   if (time < 10) {
   time = "0" + time;
@@ -359,11 +362,11 @@ const displayTimer = () => {
       timer.textContent = `${leadingZero(timerCount)}s`;
       timer.style.color = "red";
     } else {
-      timer.textContent = `${leadingZero(timerCount)}s`;
-      clearInterval(timerCountDown);
+      timer.textContent = `${leadingZero(timerCount)}`;
       setTimeout(() => {
         nextQuestion();
-      }, 1500);
+      }, 1700);
+      clearInterval(timerCountDown);
     }
   }, 1500);
 };
@@ -373,6 +376,8 @@ function nextQuestion(e) {
   if (e) {
     e.preventDefault(); // preventDefault if the e or event object is defined
   }
+  questionNumber = indexNumber === 0 ? 1 : indexNumber + 1; // set questionNumber to 1 when indexNumber is 0, otherwise set it to indexNumber + 1
+
   messageContainer.innerText = "";
   handleQuestions(); //calls the handleQuestions() function
   const currentQuizQuestion = shuffledQuestion[indexNumber]; //sets a new variable called currentQuizQuestion. This variable gets its value from an array called questions, at a position determined by another variable called
@@ -382,29 +387,38 @@ function nextQuestion(e) {
   optionB.innerHTML = currentQuizQuestion["optionB"];
   optionC.innerHTML = currentQuizQuestion["optionC"];
   optionD.innerHTML = currentQuizQuestion["optionD"];
-  
+
   /* 
     Sets the contents of the various HTML elements in the quiz. By changing the the textContent of those elements, we will be able to make the question and answer choice visible to the user.
 
     textContent is different from innerHTML
   */
-  questionNumber = indexNumber + 1; //questionNumber will now be 1 because indexNumber is 0
   questionNumberDisplay.textContent = questionNumber;
 
-  if (indexNumber === shuffledQuestion.length) {
+  if (numberOfQuestionAnswered === 10) {
     clearInterval(timerCountDown);
     window.location.href = "end.html";
   } else {
+    numberOfQuestionAnswered++;
+    console.log(numberOfQuestionAnswered);
     resetState();
     timerCount = 15; // sets the value for variable timeCount to 15
     clearInterval(timerCountDown); // clears the timerCountDown function once the time is up
     answerCheck();
     indexNumber++; //increments currentQuizQuestion counter by 1. This is very CRUCIAL as it allows us to show the next question in the quiz each time the nextQuestion button is clicked/pressed.
-    displayTimer(); // call the displayTimer function and starts the time for next question
+    // check if indexNumber is greater than or equal to the length of the shuffledQuestion array
+    if (indexNumber >= shuffledQuestion.length) {
+      clearInterval(timerCountDown);
+      window.location.href = "end.html"; // redirect to next page
+    } else {
+      displayTimer();
+    }
+    return currentQuizQuestion;
   }
-  return currentQuizQuestion;
 }
-// we define a new function resetState that removes the selected class from all answer buttons. In the nextQuestion function, we call resetState before showing the next question, which removes the selection styling from the previous answer button.
+
+
+// 
 const resetState = () => {
   // Reset the selected answer and the answer outlines
   selectedAnswer = null;
@@ -412,6 +426,8 @@ const resetState = () => {
     button.style.outline = "none";
   });
 }
+
+
 // Checks for answers
 function answerCheck() {
   // Get the current quiz question and its answer
@@ -443,36 +459,13 @@ function answerCheck() {
       setTimeout(() => {
         nextQuestion();
       }, 1500);
-      // Increase the question number
-      indexNumber++;
       questionNumber++;
     } else {
       // If the selected answer is wrong, increase the wrong answer count
       wrongAnswer++;
       showMessage("wrong!", false);
-      // Increase the question number
-      indexNumber++;
-      questionNumber++;
-      // indexNumber++;
-    }
-
-    
-
-    // Check if all 10 questions have been answered
-    if (indexNumber === 10) {
-      clearInterval(timerCountDown);
-      window.location.href = "end.html"
-    } else {
-      // If not, move on to the next question and reset the timer
-      handleQuestions();
-      timerCount = 16;
-      clearInterval(timerCountDown);
-      displayTimer();
     }
   }
-
-  
-
 }
 
 //remember to add the HTML
