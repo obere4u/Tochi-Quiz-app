@@ -17,8 +17,30 @@
 <body>
     <div class="quiz-container" ariel-role="header">
         <div class="quiz-details-container">
-            <h1>Score : <span id="player-score"></span> / 10</h1>
-            <h1> Question : <span id="question-number"></span> / 10</h1>
+            <h2 class="end-message">Congratulations, You made it to the end!!!</h2>
+            <hr>
+            
+            <div class="end-quiz-details">
+                <div class="score-details">
+                    <div class="total-score">
+                        <p>Score : <span id="player-score"></span> / 10</p>
+                    </div>
+                    <div class="total-questions">
+                        <p> Question : <span id="total-question_number"></span> / 10</p>
+                    </div>
+                </div>
+                <div class="answers-details">
+                    <div class="correct-answer">
+                        <p>Correct Answers: <span id="total_correct-answer"></span>/ 10</p>
+                    </div>
+                    <div class="wrong-answers">
+                        <p>Wrong Answers: <span id="total_wrong-answer"></span>/ 10</p>
+                    </div>
+                </div>
+            </div>
+            <div class="restart">
+                <button type="submit">Restart</button>
+            </div>
         </div>
     </div>
     

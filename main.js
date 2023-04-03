@@ -240,20 +240,21 @@ let timer = document.querySelector(".time");
 let questionNumberDisplay = document.querySelector(".question-number span");
 const answerButtons = document.querySelectorAll(".answer-option");
 const lineValueElement = document.querySelector(".line-value");
-// const submitBtn = document.querySelector("submit-btn");
-// const resultEl = document.querySelector("result");
+
+
+
 let timerCountDown;
+let timerCount;
 let questionNumber = 1;
 let currentQuestion = {};
 let score = 0;
 let selectedAnswer;
 
 let shuffledQuestion = []; //the question will be shuffled but for now, it is an empty array
-let playerScore = 0; //holds the player score
-let wrongAttempt = 0; //amount of wrong answers picked by player
+let playerScore = 20; //holds the player score
 let indexNumber = 0; //will be used in displaying next question
-let correctAnswer = 0;
-let wrongAnswer = 0;
+let correctAnswer = 2; //Amount of right answers picked by the user
+let wrongAnswer = 5; //Amount of wrong answers picked by user
 let numberOfQuestionAnswered = 0;
 
 //Create HTML elements
@@ -278,11 +279,15 @@ function handleQuestions() {
 
 
 //Event Listeners
-document.addEventListener("DOMContentLoaded", html);
-if (startButton) {
-    startButton.addEventListener("click", startQuiz);
-} // checks if startButton is null before adding an event listener to it. This will prevent the "Cannot read properties of null" error from occurring
-nextButton.addEventListener("click", nextQuestion);
+//Using the DOMContentLoaded and document.addEventListener ensures that event listeners are only added to elements that exist in the DOM, preventing the "Cannot read properties of null" error.
+document.addEventListener("DOMContentLoaded", function () {
+  if (startButton) {
+      startButton.addEventListener("click", startQuiz);
+  } // checks if startButton is null before adding an event listener to it. This will prevent the "Cannot read properties of null" error from occurring
+  if (nextButton) {
+    nextButton.addEventListener("click", nextQuestion);
+  };
+});
 
 //Functions
 
@@ -297,9 +302,9 @@ function startQuiz(e) {
 
 //
 window.onload =  () => {
-  displayTimer();
+  // displayTimer();
   handleQuestions();
-  nextQuestion();
+  // nextQuestion();
   /* 
   The window.onload event is triggered when the entire web page (including all images, scripts, and other resources) has finished loading
   
@@ -331,7 +336,7 @@ const updateProgressBar = () => {
     // set the width of the green part only
     progressBar.style.backgroundImage = `linear-gradient(to right, green ${lineValue}px, white 0)`;
   }
-  
+
   progressBar.style.width = `${lineValue}px`;
 };
 
@@ -382,7 +387,7 @@ function nextQuestion(e) {
   handleQuestions(); //calls the handleQuestions() function
   const currentQuizQuestion = shuffledQuestion[indexNumber]; //sets a new variable called currentQuizQuestion. This variable gets its value from an array called questions, at a position determined by another variable called
 
-  question.textContent = currentQuizQuestion.question;
+  question.innerHTML = currentQuizQuestion.question;
   optionA.innerHTML = currentQuizQuestion["optionA"];
   optionB.innerHTML = currentQuizQuestion["optionB"];
   optionC.innerHTML = currentQuizQuestion["optionC"];
@@ -397,6 +402,7 @@ function nextQuestion(e) {
 
   if (numberOfQuestionAnswered === 10) {
     clearInterval(timerCountDown);
+    endQuiz();
     window.location.href = "end.html";
   } else {
     numberOfQuestionAnswered++;
@@ -409,6 +415,7 @@ function nextQuestion(e) {
     // check if indexNumber is greater than or equal to the length of the shuffledQuestion array
     if (indexNumber >= shuffledQuestion.length) {
       clearInterval(timerCountDown);
+      endQuiz();
       window.location.href = "end.html"; // redirect to next page
     } else {
       displayTimer();
@@ -479,3 +486,24 @@ function showMessage(message, isCorrect) {
     messageContainer.classList.add("message-wrong");
   }
 }
+
+
+const totalScore = document.querySelector("#player-score span");
+const totalQuestion = document.querySelector("#total-question_number");
+const totalCorrectAnswer = document.querySelector("#total_correct-answer");
+let totalWrongAnswer = document.querySelector("#total_wrong-answer");
+function endQuiz(e) {
+  e.preventDefault();
+
+
+  totalScore.textContent = playerScore;
+  totalCorrectAnswer.textContent = correctAnswer;
+  totalQuestion.textContent = numberOfQuestionAnswered;
+  
+  totalWrongAnswer.textContent = wrongAnswer;
+  
+  clearInterval(timerCountDown);
+  nextButton.removeEventListener("click", nextQuestion);
+}
+
+endQuiz();

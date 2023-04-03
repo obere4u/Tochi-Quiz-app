@@ -114,7 +114,7 @@ body {
     cursor: pointer;
 }
 
-.start-quiz button:hover, .start-quiz button:active, .next button:hover, .next button:active {
+.start-quiz button:hover, .start-quiz button:active, .next button:hover, .next button:active, .restart button:hover, .restart button:active{
     background-color: #2b6ce6ec;
 }
 
@@ -259,3 +259,77 @@ body {
     transition: width 1s ease-in;
 }
 
+.end-message {
+    width: 80%;
+    text-align: center;
+    color: darkorange;
+    position: absolute;
+    top: 30px;
+}
+
+hr {
+    position: absolute;
+    top: 100px;
+    width: 90%;
+    height: 5px;
+    background-color: var(--lightGrey);
+    border: none;
+    left: 20px;
+    right: 20px;
+}
+
+.end-quiz-details {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0.5rem;
+    gap: 2rem;
+}
+
+.score-details, .answers-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    align-content: space-around;
+    gap: 5rem;
+    padding: 0.5rem;
+    margin-top: 200px;
+}
+
+.restart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.restart button {
+    width: 160px;
+    height: 38px;
+    margin-top: 100px;
+    margin-bottom: 20px;
+    background-color: var(--blueLight);
+    border: none;
+    border-radius: 4px;
+    color: var(--whitNat);
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.9;
+    cursor: pointer;
+}
+
+.score-details p, .answers-details p {
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+#total_wrong-answer, #total_correct-answer, #total-question_number, #player-score {
+    width: 100px;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-align: left;
+    /* outline: 1px solid red; */
+}
