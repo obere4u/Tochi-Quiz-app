@@ -250,44 +250,13 @@ body {
     width: 100%;
     height: 10px;
     margin: 10px 0;
+    padding: 0;
 }
 
 .progress-bar {
     height: 100%;
-    background-color: var(--veryLightBlue);
+    background-color: var(--lightGrey);
     width: 0%;
-    transition: width 1s ease-in-out;
-}
-.select {
-    position: relative;
-}
-.select > button {
-  width: 90%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  background: none;
-  color: #000;
-  font-size: 20px;
-  outline: none;
-  padding: 0;
-  position: relative;
-  z-index: 1;
-}
-
-.select button:focus {
-  outline: none;
-}
-
-.right_check-answer {
-  color: green;
-  position: absolute;
-  z-index: 2;
-}
-
-.wrong_check-answer {
-  color: red;
+    transition: width 1s ease-in;
 }
 

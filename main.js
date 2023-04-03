@@ -260,27 +260,6 @@ let wrongAnswer = 0;
 const messageContainer = document.createElement("div");
 messageContainer.classList.add("message-container");
 quizContainer.appendChild(messageContainer);
-const markAnswerIcons = document.querySelectorAll(".select");
-console.log(markAnswerIcons);
-markAnswerIcons.forEach((markAnswer) => {
-  const rightCheckAnswer = document.createElement("button");
-  console.log(rightCheckAnswer);
-  rightCheckAnswer.innerHTML =
-    '<ion-icon name="checkmark-circle-outline"></ion-icon>';
-  rightCheckAnswer.classList.add("right_check-answer");
-  markAnswer.appendChild(rightCheckAnswer);
-
-  const wrongCheckAnswer = document.createElement("button");
-  wrongCheckAnswer.innerHTML =
-    '<ion-icon name="close-circle-outline"></ion-icon>';
-  wrongCheckAnswer.classList.add("wrong_check-answer");
-  markAnswer.appendChild(wrongCheckAnswer);
-}); //This code selects all the select divs using querySelectorAll, and then loops through each one to append the check answer buttons. Note that we are now appending the check answer buttons to the existing select divs rather than creating new mark-answer divs for each button.
-
-
-
-
-
 
 //function that will shuffle the question and store it the shuffled question array
 function handleQuestions() {
@@ -318,9 +297,12 @@ function startQuiz(e) {
 
 //
 window.onload =  () => {
-  nextQuestion();
+  setTimeout(() => {
+    nextQuestion();
+  }, 1500);
   displayTimer();
   handleQuestions();
+  leadingZero();
   /* 
   The window.onload event is triggered when the entire web page (including all images, scripts, and other resources) has finished loading
   
@@ -337,9 +319,26 @@ const progressBar = document.querySelector(".progress-bar");
 
 const updateProgressBar = () => {
   const maxWidth = progressBar.parentNode.offsetWidth; //defines a constant maxWidth and assigns it the value of the width of the parent element of the progressBar element. This will be used to calculate the width of the progress bar.
-  let lineValue = (1 - timerCount / timerDuration) * maxWidth;
+
+  const minWidth = 0;
+  const percentProgress = 1 - timerCount / timerDuration;
+  let lineValue = (maxWidth - minWidth) * percentProgress;
+  
+  if (timerCount === 0) {
+    // added conditional statement
+    lineValue = maxWidth;
+  }
+
   progressBar.style.width = `${lineValue}px`;
+
 };
+
+function leadingZero(time) {
+  if (time < 10) {
+  time = "0" + time;
+  }
+  return time;
+}
 
 const displayTimer = () => {
   //declares a constant variable called displayTimer that is a function.
@@ -350,19 +349,23 @@ const displayTimer = () => {
     timerCount--; //decrements the timerCount variable by 1 each second
     timer.textContent = `${timerCount}s`; //updates the text content of an HTML element with a class of timer to show the current timerCount value in seconds
     updateProgressBar();
+
     if (timerCount > 5) {
       //checks whether timerCounter is above 5, if yes the code block runs
-      timer.textContent = `${timerCount}s`;
+      timer.textContent = `${leadingZero(timerCount)}s`;
       timer.style.color = "green";
     } else if (timerCount > 0 && timerCount <= 5) {
       //checks if the timerCount is strictly 5, if yes then from 5 and below will in red color
-      timer.textContent = `${timerCount}s`;
+      timer.textContent = `${leadingZero(timerCount)}s`;
       timer.style.color = "red";
     } else {
-      clearInterval(timerCountDown); // if timer reaches 0, clear the interval
-      nextQuestion(); // move to next question
+      timer.textContent = `${leadingZero(timerCount)}s`;
+      clearInterval(timerCountDown);
+      setTimeout(() => {
+        nextQuestion();
+      }, 1500);
     }
-  }, 1000);
+  }, 1500);
 };
 
 //function that display next question in the array
@@ -372,7 +375,6 @@ function nextQuestion(e) {
   }
   messageContainer.innerText = "";
   handleQuestions(); //calls the handleQuestions() function
-  displayTimer();
   const currentQuizQuestion = shuffledQuestion[indexNumber]; //sets a new variable called currentQuizQuestion. This variable gets its value from an array called questions, at a position determined by another variable called
 
   question.textContent = currentQuizQuestion.question;
@@ -388,22 +390,28 @@ function nextQuestion(e) {
   */
   questionNumber = indexNumber + 1; //questionNumber will now be 1 because indexNumber is 0
   questionNumberDisplay.textContent = questionNumber;
-  // if (questionNumber === 10) {
-  //   clearInterval(timerCountDown);
-  // }
-  if (indexNumber === 11) {
+
+  if (indexNumber === shuffledQuestion.length) {
     clearInterval(timerCountDown);
     window.location.href = "end.html";
   } else {
-    timerCount = 16; // sets the value for variable timeCount to 15
+    resetState();
+    timerCount = 15; // sets the value for variable timeCount to 15
     clearInterval(timerCountDown); // clears the timerCountDown function once the time is up
-    displayTimer(); // call the displayTimer function and starts the time for next question
     answerCheck();
+    indexNumber++; //increments currentQuizQuestion counter by 1. This is very CRUCIAL as it allows us to show the next question in the quiz each time the nextQuestion button is clicked/pressed.
+    displayTimer(); // call the displayTimer function and starts the time for next question
   }
-  indexNumber++; //increments currentQuizQuestion counter by 1. This is very CRUCIAL as it allows us to show the next question in the quiz each time the nextQuestion button is clicked/pressed.
   return currentQuizQuestion;
 }
-
+// we define a new function resetState that removes the selected class from all answer buttons. In the nextQuestion function, we call resetState before showing the next question, which removes the selection styling from the previous answer button.
+const resetState = () => {
+  // Reset the selected answer and the answer outlines
+  selectedAnswer = null;
+  answerButtons.forEach((button) => {
+    button.style.outline = "none";
+  });
+}
 // Checks for answers
 function answerCheck() {
   // Get the current quiz question and its answer
@@ -432,7 +440,9 @@ function answerCheck() {
       showMessage("correct!", true);
       this.style.outline = "1px solid green";
       clearInterval(timerCountDown);
-      
+      setTimeout(() => {
+        nextQuestion();
+      }, 1500);
       // Increase the question number
       indexNumber++;
       questionNumber++;
@@ -449,7 +459,7 @@ function answerCheck() {
     
 
     // Check if all 10 questions have been answered
-    if (indexNumber === 11) {
+    if (indexNumber === 10) {
       clearInterval(timerCountDown);
       window.location.href = "end.html"
     } else {
@@ -475,22 +485,4 @@ function showMessage(message, isCorrect) {
   } else {
     messageContainer.classList.add("message-wrong");
   }
-}
-
-function checkAnswer(answer) {
-  if (answer === shuffledQuestion[indexNumber]["correct"]) {
-    const markAnswer = document.querySelectorAll(".selected")[indexNumber];
-    const rightCheckAnswer = markAnswer.querySelector(".right_check-answer");
-    rightCheckAnswer.classList.add("checked");
-
-    score++;
-  } else {
-    const markAnswer = document.querySelectorAll(".mark-answer")[indexNumber];
-    const rightCheckAnswer = markAnswer.querySelector(".right_check-answer");
-    const wrongCheckAnswer = markAnswer.querySelector(".wrong_check-answer");
-    rightCheckAnswer.classList.add("checked");
-    wrongCheckAnswer.classList.add("checked");
-  }
-
-  disableOptions();
 }
