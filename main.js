@@ -331,8 +331,8 @@ const updateProgressBar = () => {
     // set the width of the green part only
     progressBar.style.backgroundImage = `linear-gradient(to right, green ${lineValue}px, white 0)`;
   }
+  
   progressBar.style.width = `${lineValue}px`;
-
 };
 
 //adds zero 0 before the time once it is a single unit
