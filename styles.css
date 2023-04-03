@@ -187,35 +187,51 @@ body {
 .answer-option {
     display: flex;
     position: relative;
-    width: 100%;
+    width: 95%;
     margin-bottom: 10px;
     outline: none;
     border: none;
 }
 
-.correct {
-    outline: 1px solid #69DED7;
-    position: relative;
-    width: 85%;
-    background: #FFFFFF;
-    padding: 0.5rem;
-    text-align: left;
-    cursor: pointer;
+.answer-no-outline {
+  outline: none !important;
 }
 
-.correct {
-    outline: 1px solid #e66f6f;
-    position: relative;
-    width: 85%;
-    background: #FFFFFF;
+.mark-answer button {
+    display: inline-flex;
+    outline: red solid 1px;
+    background-color: none;
+    /* fill: none; */
+    width: 100px;
+    height: 20px;
+    border: none;
+}
+
+.message-correct {
+    color: #0adf7b;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.message-wrong {
+    color: #f00707;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.message-container {
+    width: 200px;
+    position: absolute;
+    top: 0;
+    margin-top: 50px;
+    left: 0;
+    margin-left: 20px;
     padding: 0.5rem;
-    text-align: left;
-    cursor: pointer;
 }
 
 .optionA, .optionB, .optionC, .optionD {
     position: relative;
-    width: 85%;
+    width: 95%;
     background: #FFFFFF;
     padding: 0.5rem;
     text-align: left;
@@ -229,3 +245,49 @@ body {
     cursor: pointer;
     padding: 0.5rem;
 }
+
+.progress-bar-container {
+    width: 100%;
+    height: 10px;
+    margin: 10px 0;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: var(--veryLightBlue);
+    width: 0%;
+    transition: width 1s ease-in-out;
+}
+.select {
+    position: relative;
+}
+.select > button {
+  width: 90%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background: none;
+  color: #000;
+  font-size: 20px;
+  outline: none;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.select button:focus {
+  outline: none;
+}
+
+.right_check-answer {
+  color: green;
+  position: absolute;
+  z-index: 2;
+}
+
+.wrong_check-answer {
+  color: red;
+}
+

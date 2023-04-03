@@ -16,6 +16,14 @@
 </head>
 <body>
     <div class="quiz-container" ariel-role="header">
+        <!-- <div class="answer">
+            <p class="correctAnswer"></p>
+            <p class="wrongAnswer"></p>
+        </div> -->
+        <div class="progress-bar-container">
+            <div class="progress-bar"></div>
+        </div>
+
         <div class="question-container"> 
             <div class="timer"> 
                 <p>Time left:</p>
@@ -31,21 +39,21 @@
                 <div class="question-wrapper">
                     <!--******Will use JavaScript to add the questions******-->
                     <p class="question"></p>
-                    <button class="answer-option">
+                    <button class="answer-option" type="submit" data-answer="optionA">
                         <span>A</span>
-                        <div class="optionA"></div>
+                        <div class="select optionA"></div>
                     </button>
-                    <button class="answer-option ">
+                    <button class="answer-option" type="submit" data-answer="optionB">
                         <span>B</span>
-                        <div class="optionB"></div>
+                        <div class="select optionB"></div>
                     </button>
-                    <button class="answer-option ">
+                    <button class="answer-option" type="submit" data-answer="optionC">
                         <span>C</span>
-                        <div class="optionC"></div>
-                    </b>
-                    <button class="answer-option ">
+                        <div class="select optionC" type="submit"></div>
+                    </button>
+                    <button class="answer-option" type="submit" data-answer="optionD">
                         <span>D</span>
-                        <div class="optionD"></div>
+                        <div class="select optionD"></div>
                     </button>
                 </div>
             </div>
@@ -53,19 +61,13 @@
                 <button id="next" type="submit">Next</button>
             </div>
             
-            <div class="answer">
-                <div class="correct">
-                    <span></span>
-                </div>
-                <div class="incorrect">
-                    <span></span>
-                </div>
-            </div>
         </div>
+        
         
     </div>
     
-
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="main.js"></script>
 </body>
 </html>
