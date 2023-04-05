@@ -302,9 +302,9 @@ function startQuiz(e) {
 
 //
 window.onload =  () => {
-  // displayTimer();
+  displayTimer();
   handleQuestions();
-  // nextQuestion();
+  nextQuestion();
   /* 
   The window.onload event is triggered when the entire web page (including all images, scripts, and other resources) has finished loading
   
@@ -493,7 +493,8 @@ const totalQuestion = document.querySelector("#total-question_number");
 const totalCorrectAnswer = document.querySelector("#total_correct-answer");
 let totalWrongAnswer = document.querySelector("#total_wrong-answer");
 function endQuiz(e) {
-  e.preventDefault();
+  // e.preventDefault();
+  // window.onload = null;
 
 
   totalScore.textContent = playerScore;
