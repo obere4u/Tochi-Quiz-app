@@ -229,38 +229,45 @@ const questions = [
 
 const html = document.querySelector("html");
 const quizContainer = document.querySelector(".quiz-container");
-const question = document.querySelector(".question");
+const quizDetailContainer = document.querySelector(".quiz-details-container");
+
 const optionA = document.querySelector(".optionA");
 const optionB = document.querySelector(".optionB");
 const optionC = document.querySelector(".optionC");
 const optionD = document.querySelector(".optionD");
 const nextButton = document.querySelector("#next");
 const startButton = document.querySelector("#start");
+const restartButton = document.querySelector("#restart");
 let timer = document.querySelector(".time");
 let questionNumberDisplay = document.querySelector(".question-number span");
 const answerButtons = document.querySelectorAll(".answer-option");
 const lineValueElement = document.querySelector(".line-value");
 
 
-
+// question = null;
 let timerCountDown;
 let timerCount;
 let questionNumber = 1;
 let currentQuestion = {};
-let score = 0;
 let selectedAnswer;
 
 let shuffledQuestion = []; //the question will be shuffled but for now, it is an empty array
-let playerScore = 20; //holds the player score
+// let playerScore = correctAnswer * 2; //holds the player score
 let indexNumber = 0; //will be used in displaying next question
-let correctAnswer = 2; //Amount of right answers picked by the user
-let wrongAnswer = 5; //Amount of wrong answers picked by user
-let numberOfQuestionAnswered = 0;
+let correctAnswer = 7; //Amount of right answers picked by the user
+let wrongAnswer = 1; //Amount of wrong answers picked by user
+let numberOfQuestionAnswered = 8;
 
 //Create HTML elements
 const messageContainer = document.createElement("div");
 messageContainer.classList.add("message-container");
 quizContainer.appendChild(messageContainer);
+
+const remark = document.createElement("div");
+remark.classList.add("message-remark");
+if (quizDetailContainer) {
+  quizDetailContainer.appendChild(remark);
+}
 
 //function that will shuffle the question and store it the shuffled question array
 function handleQuestions() {
@@ -287,6 +294,12 @@ document.addEventListener("DOMContentLoaded", function () {
   if (nextButton) {
     nextButton.addEventListener("click", nextQuestion);
   };
+
+  if (restartButton) {
+    restartButton.addEventListener("click", restartQuiz);
+  }
+
+  endQuiz();
 });
 
 //Functions
@@ -300,21 +313,6 @@ function startQuiz(e) {
   
 }
 
-//
-window.onload =  () => {
-  displayTimer();
-  handleQuestions();
-  nextQuestion();
-  /* 
-  The window.onload event is triggered when the entire web page (including all images, scripts, and other resources) has finished loading
-  
-  Anonymous function is used here
-
-  Inside the window.onload function, we're calling the nextQuestion() function, which is already declared elsewhere in the code. This will ensure that the nextQuestion() function is called as soon as the page finishes loading.
-
-  This code ensures that the nextQuestion() function is called automatically when the page is reloaded, so that the first quiz question is displayed without the need for the user to click a button or take any other action.
-  */
-};
 
 const timerDuration = 16;
 const progressBar = document.querySelector(".progress-bar");
@@ -374,6 +372,7 @@ const displayTimer = () => {
       clearInterval(timerCountDown);
     }
   }, 1500);
+  return timerCountDown;
 };
 
 //function that display next question in the array
@@ -381,46 +380,67 @@ function nextQuestion(e) {
   if (e) {
     e.preventDefault(); // preventDefault if the e or event object is defined
   }
+
+  const question = document.querySelector(".question");
+
   questionNumber = indexNumber === 0 ? 1 : indexNumber + 1; // set questionNumber to 1 when indexNumber is 0, otherwise set it to indexNumber + 1
 
   messageContainer.innerText = "";
   handleQuestions(); //calls the handleQuestions() function
-  const currentQuizQuestion = shuffledQuestion[indexNumber]; //sets a new variable called currentQuizQuestion. This variable gets its value from an array called questions, at a position determined by another variable called
+  const currentQuizQuestion =
+    indexNumber < shuffledQuestion.length
+      ? shuffledQuestion[indexNumber]
+      : null; // add a check for indexNumber before accessing shuffledQuestion array and sets a new variable called currentQuizQuestion. This variable gets its value from an array called questions, at a position determined by another variable called
 
-  question.innerHTML = currentQuizQuestion.question;
-  optionA.innerHTML = currentQuizQuestion["optionA"];
-  optionB.innerHTML = currentQuizQuestion["optionB"];
-  optionC.innerHTML = currentQuizQuestion["optionC"];
-  optionD.innerHTML = currentQuizQuestion["optionD"];
+  console.log(
+    "indexNumber:",
+    indexNumber,
+    "numberOfAnsQues:",
+    numberOfQuestionAnswered,
+    "shuffledQuestion.length:",
+    shuffledQuestion.length
+  );
+  if (currentQuizQuestion) {
+    
+    question.textContent = currentQuizQuestion.question;
+    optionA.textContent = currentQuizQuestion["optionA"];
+    optionB.textContent = currentQuizQuestion["optionB"];
+    optionC.textContent = currentQuizQuestion["optionC"];
+    optionD.textContent = currentQuizQuestion["optionD"];
 
-  /* 
-    Sets the contents of the various HTML elements in the quiz. By changing the the textContent of those elements, we will be able to make the question and answer choice visible to the user.
+    /* 
+      Sets the contents of the various HTML elements in the quiz. By changing the the textContent of those elements, we will be able to make the question and answer choice visible to the user.
 
-    textContent is different from innerHTML
-  */
-  questionNumberDisplay.textContent = questionNumber;
+      textContent is different from innerHTML
+    */
+    questionNumberDisplay.textContent = questionNumber;
 
-  if (numberOfQuestionAnswered === 10) {
-    clearInterval(timerCountDown);
-    endQuiz();
-    window.location.href = "end.html";
-  } else {
-    numberOfQuestionAnswered++;
-    console.log(numberOfQuestionAnswered);
-    resetState();
-    timerCount = 15; // sets the value for variable timeCount to 15
-    clearInterval(timerCountDown); // clears the timerCountDown function once the time is up
-    answerCheck();
-    indexNumber++; //increments currentQuizQuestion counter by 1. This is very CRUCIAL as it allows us to show the next question in the quiz each time the nextQuestion button is clicked/pressed.
-    // check if indexNumber is greater than or equal to the length of the shuffledQuestion array
-    if (indexNumber >= shuffledQuestion.length) {
+    if (numberOfQuestionAnswered === 10 && timerCount === 0) {
+      window.location.href = "end.html";
       clearInterval(timerCountDown);
       endQuiz();
-      window.location.href = "end.html"; // redirect to next page
     } else {
+      numberOfQuestionAnswered++;
+      resetState();
+      timerCount = 15; // sets the value for variable timeCount to 15
+      clearInterval(timerCountDown); // clears the timerCountDown function once the time is up
+      answerCheck();
+      indexNumber++; //increments currentQuizQuestion counter by 1. This is very CRUCIAL as it allows us to show the next question in the quiz each time the nextQuestion button is clicked/pressed.
+      // check if indexNumber is greater than or equal to the length of the shuffledQuestion array
+      if (indexNumber >= shuffledQuestion.length && timerCount === 0) {
+        clearInterval(timerCountDown);
+        displayTimer();
+        window.location.href = "end.html"; // redirect to next page
+        endQuiz();
+      }
       displayTimer();
     }
-    return currentQuizQuestion;
+  } else {
+    // handle case where currentQuizQuestion is null
+    clearInterval(timerCountDown);
+    displayTimer();
+    window.location.href = "end.html";
+    endQuiz();
   }
 }
 
@@ -465,7 +485,7 @@ function answerCheck() {
       clearInterval(timerCountDown);
       setTimeout(() => {
         nextQuestion();
-      }, 1500);
+      }, 1200);
       questionNumber++;
     } else {
       // If the selected answer is wrong, increase the wrong answer count
@@ -475,7 +495,7 @@ function answerCheck() {
   }
 }
 
-//remember to add the HTML
+//This will display the message in the message container
 function showMessage(message, isCorrect) {
   console.log("Showing message:", message);
   messageContainer.innerText = message;
@@ -487,24 +507,76 @@ function showMessage(message, isCorrect) {
   }
 }
 
-
-const totalScore = document.querySelector("#player-score span");
-const totalQuestion = document.querySelector("#total-question_number");
-const totalCorrectAnswer = document.querySelector("#total_correct-answer");
-let totalWrongAnswer = document.querySelector("#total_wrong-answer");
-function endQuiz(e) {
-  // e.preventDefault();
-  // window.onload = null;
-
-
-  totalScore.textContent = playerScore;
-  totalCorrectAnswer.textContent = correctAnswer;
-  totalQuestion.textContent = numberOfQuestionAnswered;
-  
-  totalWrongAnswer.textContent = wrongAnswer;
-  
-  clearInterval(timerCountDown);
-  nextButton.removeEventListener("click", nextQuestion);
+function restartQuiz(e) {
+  e.preventDefault();
+  window.location.href = "questions.html"
 }
 
-endQuiz();
+
+function handleLoad() {
+  handleQuestions();
+  displayTimer();
+  nextQuestion();
+}
+
+window.addEventListener("load", handleLoad);
+
+let endQuizCalled = false;
+
+const totalScore = document.querySelector("#player-score");
+const totalQuestion = document.querySelector("#total-question_number");
+const totalCorrectAnswer = document.querySelector("#total_correct-answer");
+const totalWrongAnswer = document.querySelector("#total_wrong-answer");
+
+function endQuiz(e) {
+  
+
+  if (e) {
+    e.preventDefault();
+  }
+  endQuizCalled = true;
+  // Remove event listeners
+  // window.removeEventListener("load", handleLoad);
+  // document.querySelector("#next").removeEventListener("click", nextQuestion);
+
+  // resetState();
+
+  clearInterval(timerCountDown);
+
+  // Check if all questions have been answered
+  if (numberOfQuestionAnswered === 10) {
+    totalScore.textContent = `${correctAnswer}` * 10;
+    totalCorrectAnswer.textContent = `${correctAnswer}`;
+    totalQuestion.textContent = `${numberOfQuestionAnswered}`;
+    totalWrongAnswer.textContent = wrongAnswer;
+  } else {
+    totalScore.textContent = `${correctAnswer}` * 10;
+    totalCorrectAnswer.textContent = `${correctAnswer}`;
+    totalQuestion.textContent = `${numberOfQuestionAnswered}`;
+    totalWrongAnswer.textContent = wrongAnswer;
+  }
+
+  const finalScore = parseInt(totalScore.textContent); //Because totalScore is HTML element, for us to get the value of the number, we use parseInt() to convert the text of totalScore to a number
+
+  if (finalScore <= 39) {
+    totalScore.style.color = 'red';
+    totalCorrectAnswer.style.color = 'red';
+    remark.style.color = 'red';
+    remark.innerText = 'phew! you need to keep learning';
+  } else if (finalScore >= 40 && finalScore <= 69 ) {
+    totalScore.style.color = 'orange';
+    totalCorrectAnswer.style.color = 'orange';
+    remark.innerText = 'Very Good! You are rocking this';
+    remark.style.color = 'orange';
+  } else {
+    totalCorrectAnswer.style.color = 'green';
+    totalScore.style.color = 'green';
+    remark.innerText = 'Weldon Champ! You are a genius';
+    remark.style.color = 'green'
+  }
+}
+
+
+
+
+

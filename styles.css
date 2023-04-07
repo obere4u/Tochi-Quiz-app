@@ -302,10 +302,10 @@ hr {
 
 }
 
-.restart button {
+#restart {
     width: 160px;
     height: 38px;
-    margin-top: 50px;
+    margin-top: 70px;
     background-color: var(--blueLight);
     border: none;
     border-radius: 4px;
@@ -327,4 +327,15 @@ hr {
     font-size: 1.2rem;
     font-weight: 700;
     text-align: left;
+}
+
+.message-remark {
+    width: 80%;
+    position: inherit;
+    margin-top: -110px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    padding: 1rem;
+
 }
